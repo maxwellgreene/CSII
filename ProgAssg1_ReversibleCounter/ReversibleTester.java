@@ -48,7 +48,6 @@ public class ReversibleTester {
       }
    }
 
-
    /* Applies to the given ReversibleCounter object the method indicated 
    ** by the given command code.
    */
@@ -90,7 +89,6 @@ public class ReversibleTester {
       }
    }
 
-
    /* Displays the given string and then reads the user's response, 
    ** interpreting it as an int and returning that value.
    */
@@ -109,7 +107,6 @@ public class ReversibleTester {
       System.out.printf("%c to toggle mode, ", TOGGLE);
       System.out.printf("%c for this help\n", HELP);
    }
-
 
    /* Surrogate for the System.out.println() method.
    */
