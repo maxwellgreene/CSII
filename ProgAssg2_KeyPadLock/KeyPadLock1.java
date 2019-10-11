@@ -1,5 +1,5 @@
 /* KeyPadLock1.java
-** Author: R. McCloskey  and  < your name >
+** Author: R. McCloskey  and  Maxwell Greene
 ** Date: October 2019
 **
 ** An instance of this class models a locking device that can be either 
@@ -100,6 +100,10 @@ public class KeyPadLock1 implements KeyPadLock {
    /*Additional methods to keep the above code pretty
    */
    
+   /* Shifts all elements in digitsEntered "to the left"
+   ** and adds the given digit to the end. This results in 
+   ** digitsEntered containing only the most recent n digits entered.
+   */
    private void append(int digit)
    {
       for (int i=0 ; i < digitsEntered.length - 1; i++)
@@ -107,10 +111,13 @@ public class KeyPadLock1 implements KeyPadLock {
       digitsEntered[digitsEntered.length - 1] = digit;
    }
    
+   /* Sets all elements in the digitsEntered array to -1 
+   ** so there is no chance they can match inputs. (effectively "null")
+   */
+   
    private void reset()
    {
       for (int i=0 ; i<digitsEntered.length; i++)
       { digitsEntered[i] = -1; }
    }
-
 }

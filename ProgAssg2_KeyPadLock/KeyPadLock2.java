@@ -1,9 +1,9 @@
 /* KeyPadLock2.java (extends KeyPadLock1)
 ** CMPS 144 Fall 2019 Prog. Assg. #2
-** Author: R. McCloskey and < student's name >
+** Author: R. McCloskey and Maxwell Greene
 ** Date: October 2019
-** Collaborated with: ...
-** Known defects: ...
+** Collaborated with: N/A
+** Known defects: N/A
 **
 ** An instance of this class, like its parent, models a locking device that
 ** can be either open or closed; to open it requires that a prescribed 
@@ -50,9 +50,7 @@ public class KeyPadLock2 extends KeyPadLock1 {
    ** one specified.  Otherwise, nothing changes.
    */
    public void replaceCode(int[] newCode) {
-      System.out.println(Arrays.toString(super.secretCode));
       if(super.open)
       { super.secretCode = newCode; }
-      System.out.println(Arrays.toString(super.secretCode));
    }
 }
