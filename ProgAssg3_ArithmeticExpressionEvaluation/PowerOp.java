@@ -7,7 +7,7 @@ public class PowerOp implements Operator {
    public int precedenceFactor() { return 3; }
 
    public int apply(Operand x, Operand y) {
-      return x.valueOf() ^ y.valueOf();
+      return (int) Math.pow((double) x.valueOf(), (double) y.valueOf());
    }
 
    public String toString() { return "^"; }
