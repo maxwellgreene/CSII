@@ -1,0 +1,77 @@
+Computer Science II Lab, Lab #12 Activity #1
+Author:  Maxwell Greene, Lasha Basadzishvili
+Date: November 2019
+
+Activity #1, Question #1:
+
+Initial Tree:
+               40 
+              /  \
+         ...        ...
+       /                \
+     20                  58
+    /  \                /  \
+  ..    ..            ..    ..
+ /        \          /        \
+4          29      47          67
+ \        /  \       \        /  \
+  10    25    35      52    60    73
+ /  \        /
+6    12    32
+ \
+  8
+
+(a) Insert 44
+(b) Remove 25
+(c) Remove 4
+
+                   40 
+                  /  \
+             ...        ...
+           /                \
+         20                  58
+        /  \                /  \
+      ..    ..            ..    ..
+     /        \          /        \
+    10         29       47          67
+   /  \          \     /  \        /  \
+  6    12        35   44   52    60    73
+   \
+     8
+This is the combined tree with operations (a), (b), (c) applied.
+
+(d) Remove 40
+
+                 58 
+                /  \
+             ...    ...
+           /            \
+         20             67
+        /  \           /  \
+      ..    ..       60    73
+     /        \
+    10         29
+   /  \          \
+  6    12        35
+   \               \
+    8              47
+                  /  \
+                 44   52
+
+This is the resulting tree of adding elements of the left
+subtree of 58 to the right subtree of 20 and making the 20
+subtree the new left subtree of 58. It is not the most efficient way, but it works for this case.
+
+Activity #1, Question #2:
+
+(a)
+4,6,8,10,12,20,25,29,32,35,40,47,52,58,60,67,73
+
+(b)
+40,30,4,10,6,8,12,29,25,35,32,58,47,52,67,60,73
+
+
+
+
+
+

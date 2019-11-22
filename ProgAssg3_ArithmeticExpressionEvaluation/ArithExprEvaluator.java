@@ -1,9 +1,12 @@
 /* ExprEvaluator.java
 ** An instance of this class evaluates arithmetic expressions.
 **
-** Author: R. McCloskey and ...
+** Author: R. McCloskey and Maxwell Greene
 ** Date: October 2019
 ** CMPS 144
+**
+** Known issues: Overly complicated. Couldn't properly implement
+**               pushing and poping without creating new variables.
 */
 import java.util.*;
 
@@ -46,14 +49,9 @@ public class ArithExprEvaluator {
             if(token == '/'){DivideOp op4 = new DivideOp();       pres += op4.precedenceFactor();}//   operatorStack.push(op4);}
             if(token == '^'){PowerOp op5 = new PowerOp();         pres += op5.precedenceFactor();}//   operatorStack.push(op5);}
             
-            
-            System.out.println("Processing operator with presedence factor: " + pres);
-            System.out.println("operator.topOf(): "+((Operator) operatorStack.topOf()).precedenceFactor());
-            
             while(pres <= ((Operator) operatorStack.topOf()).precedenceFactor())
             {
                pres = ((Operator) operatorStack.topOf()).precedenceFactor();
-               System.out.println("did it");
                IntLiteral literal2 = (IntLiteral) operandStack.topOf();
                operandStack.pop();
                
