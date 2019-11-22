@@ -33,7 +33,6 @@ public class MaxSegSumTester {
       if (result1 != result2) {
          System.out.println("**ERROR; correct result is " + result2);
       }
-
    }
 
 

@@ -4,28 +4,31 @@
 ** Author: R. McCloskey and Maxwell Greene
 ** Date: November 2019
 */
+import java.util.Arrays;
+
 public class MaxSegSum {
 
    /* Returns the largest sum among all segments of the given array.
    */
-   public static int maxSegSumRec(int[] a) {
-      return maxSegSumRec(a, 0, a.length);
+   public static int maxSegSumRec(int[] a)
+   {
+      return maxSegSumRec(a, 0, a.length-1);
    }
 
    /* Returns the largest sum among all segments of the given array segment
    ** (i.e., a[low..high)).  Uses a recursive approach.
    ** pre: 0 <= low <= high <= a.length
    */
-   public static int maxSegSumRec(int[] a, int low, int high) {
-     //#######################################################
-     if (low == high) { return 0; }
-
+   public static int maxSegSumRec(int[] a, int low, int high)
+   {
      int mid = (low + high)/2;
-
-      return Math.max(Math.max(maxSegSumRec(a, low, mid),
-                    maxSegSumRec(a, mid+1, high)),
-                    maxCrossSum(a, low, mid, high));
-      //#######################################################
+     if (low == high) { return a[low]; }
+     int maxBelow = maxSegSumRec(a, low, mid);
+     int maxAbove = maxSegSumRec(a, mid+1, high);
+     int maxCross = maxCrossSum(a, low, mid, high);
+     int returnVal = Math.max(Math.max(maxBelow,maxAbove),maxCross);
+     
+     return returnVal;
    }
 
    /* Returns the largest sum of any prefix of the given array segment.
@@ -33,16 +36,14 @@ public class MaxSegSum {
    ** satisfying bottom <= k <= top.
    ** pre: 0 <= bottom <= top <= b.length
    */
-   private static int maxPrefixSum(int[] b, int bottom, int top) {
-     //#######################################################
+   private static int maxPrefixSum(int[] b, int low, int high)
+   {
+     if (low == high) { return 0; }
      int max = Integer.MIN_VALUE;
-     int[] bSum = prefixSums(b, bottom, top);
-     for (int i=0; i < bSum.length;i++) //b.length
-     {
-       max = Math.max(bSum[i],max);
-     }
-      return max;
-    //#######################################################
+     int[] bSum = prefixSums(b, low, high);
+     for (int i=0; i < bSum.length;i++)
+     {max = Math.max(bSum[i],max);}
+     return max;
    }
 
    /* Returns the largest sum of any suffix of the given array segment.
@@ -50,22 +51,24 @@ public class MaxSegSum {
    ** satisfying bottom <= k <= top.
    ** pre: 0 <= bottom <= top <= b.length
    */
-   private static int maxSuffixSum(int[] b, int low, int high) {
-     //#######################################################
+   private static int maxSuffixSum(int[] b, int low, int high)
+   {
+     if (low == high) { return 0; }
      int max = Integer.MIN_VALUE;
      int[] bSum = suffixSums(b, low, high);
      for (int i=0; i < bSum.length;i++)
-     {
-       max = Math.max(bSum[i],high);
-     }
-      return max;
-      //#######################################################
+     {max = Math.max(bSum[i],max);}
+     return max;
    }
 
-   private static int maxCrossSum(int b[], int low, int mid, int high) {
-     //#######################################################
-     return (maxPrefixSum(b, low, mid) + maxSuffixSum(b, mid, high));
-     //#######################################################
+   private static int maxCrossSum(int b[], int low, int mid, int high)
+   {
+     int maxPrefix = maxPrefixSum(b, mid+1, high+1);
+     int maxSuffix = maxSuffixSum(b, low, mid);
+     int returnVal = Math.max(Math.max(
+                              maxPrefix, maxSuffix),
+                              maxPrefix + maxSuffix);
+     return returnVal;
    }
 
 
@@ -77,7 +80,8 @@ public class MaxSegSum {
    /* Returns the maximum segment sum of the given array, computed using
    ** the prefix sums approach.
    */
-   public static int maxSegSumViaPrefixSums(int[] a) {
+   public static int maxSegSumViaPrefixSums(int[] a)
+   {
       return maxSegSumViaPrefixSums(a, 0, a.length);
    }
 
@@ -85,11 +89,13 @@ public class MaxSegSum {
    ** (i.e., a[low..high)), computed using the prefix sums approach.
    ** pre: 0 <= low <= high <= a.length
    */
-   public static int maxSegSumViaPrefixSums(int[] a, int low, int high) {
+   public static int maxSegSumViaPrefixSums(int[] a, int low, int high)
+   {
       int[] prefixSums = prefixSums(a, low, high);
       int minPrefixSumSoFar = 0;
       int maxDiffSoFar = 0;
-      for (int i=0; i != prefixSums.length; i++) {
+      for (int i=0; i != prefixSums.length; i++)
+      {
          maxDiffSoFar = Math.max(maxDiffSoFar,
                                  prefixSums[i] - minPrefixSumSoFar);
          minPrefixSumSoFar = Math.min(minPrefixSumSoFar, prefixSums[i]);
@@ -103,12 +109,13 @@ public class MaxSegSum {
    ** of the given array segment.
    ** pre: 0 <= bottom <= top <= b.length
    */
-   private static int[] prefixSums(int[] b, int bottom, int top) {
+   private static int[] prefixSums(int[] b, int bottom, int top)
+   {
       final int N = top - bottom;
       int[] result = new int[N];
       if (N != 0) {
          result[0] = b[bottom];
-         for (int i=1; i != N; i++) {
+         for (int i=1; i < N; i++) {
             result[i] = result[i-1] + b[bottom+i];
          }
       }
@@ -123,10 +130,10 @@ public class MaxSegSum {
    */
    private static int[] suffixSums(int[] b, int bottom, int top) {
       final int N = top - bottom;
-      int[] result = new int[N];
+      int[] result = new int[N+1];
       if (N != 0) {
-         result[0] = b[bottom];
-         for (int i=1; i != N; i++) {
+         result[0] = b[top];
+         for (int i=1; i <= N; i++) {
             result[i] = result[i-1] + b[top-i];
          }
       }
