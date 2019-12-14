@@ -1,7 +1,7 @@
-/ * An instance of this class represents a non-empty list of items.
+/* An instance of this class represents a non-empty list of items.
 **
 ** Author: R. McCloskey, November 2019
-* /
+*/
 
 public class RecursiveListNonEmpty <T> implements RecursiveList <T> {
 

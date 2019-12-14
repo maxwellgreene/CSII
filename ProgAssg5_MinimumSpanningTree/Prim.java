@@ -1,6 +1,6 @@
 import java.util.List;
 import java.util.Iterator;
-
+import java.util.ArrayList;
 /* An instance of this class computes a minimum spanning forest (MSF) of the
 ** graph provided to it upon construction, using an implementation of Prim's
 ** Algorithm.  Which is to say that the graph produced is a forest of trees,
@@ -8,10 +8,9 @@ import java.util.Iterator;
 ** the given graph.  (If the given graph is connected, that would be a single
 ** tree.)
 **
-** Author: R. McCloskey and <your name>
+** Author: R. McCloskey and Maxwell Greene
 ** CMPS 144, Prog. Assg. #5, December 2019
-** Collaborated with: ...
-** Known defects: ...
+** Known defects: Sometimes adds duplicate node to new tree, not sure why
 */
 
 public class Prim {
@@ -49,7 +48,7 @@ public class Prim {
       // "closest" to vertex y (i.e., edge {x,y} has minimum cost among
       // edges connecting y to a vertex in a tree).
       closest = new int[N];
-      fillAry(closest, -1);
+      fillAry(closest, Integer.MAX_VALUE);
 
       // Establish Z (the set of vertices not yet included in a tree but
       // connected by an edge to a vertex that has been) as being an
@@ -61,7 +60,6 @@ public class Prim {
       // Insert edges into 'trees' that make it into a MSF of 'graph'
       computeMinSpanningForest();
    }
-
 
    // observers
    // ---------
@@ -91,7 +89,6 @@ public class Prim {
    ** trees.
    */
    private void computeMinSpanningForest() {
-
       for (int v = 0; v != N; v++) {
          if (trees.degreeOf(v) == 0) {   // v is not yet in any MST, so use
             addTreeToForest(v);          // it as the root of a new tree
@@ -100,14 +97,54 @@ public class Prim {
       loopCntr = loopCntr + N;
    }
 
-
    /* Inserts into 'trees' a set of edges that form a minimum spanning tree
    ** (MST) of the connected component of 'graph' containing vertex v.
    */
    private void addTreeToForest(int v) {
-      // STUB!
+      List<Integer> tree = new ArrayList<Integer>();
+      tree.add(v);
+      int from = 0;
+      while(tree.size() < 4){
+         for(int fromIndex=0;fromIndex<tree.size();fromIndex++){
+            from = tree.get(fromIndex);
+            for(int to=0;to<trees.numVertices();to++){
+               if(graph.hasEdge(from,to) && tree.contains(from) && !tree.contains(to) && from != to)
+               { closest[to] = graph.edgeCost(from,to); }
+            }
+         }
+         int indOfMin = indexOfMin(closest);
+         for(int fromIndex=0;fromIndex<tree.size();fromIndex++){
+            from = tree.get(fromIndex);
+            if(graph.edgeCost(from,indOfMin) == closest[indOfMin]){
+               System.out.println("Inserting edge from: "+from+"  to: "+indOfMin+" at cost: "+graph.edgeCost(from,indOfMin));
+               trees.insertEdge(from,indOfMin,graph.edgeCost(from,indOfMin));
+               tree.add(indOfMin);
+            }
+         }
+         fillAry(closest,Integer.MAX_VALUE);
+      }
    }
-
+   
+   /* Returns the index of the minimum value in a array
+   */
+   private int indexOfMin (int [] arr1) {
+       int index = 0; int min = arr1[index];
+       for (int i=1; i<arr1.length; i++) {
+           if (arr1[i] < min) {min = arr1[i];index = i;}
+       }
+       return index;
+   }
+   
+   /* Returns true if all in a equal b
+   */
+   private boolean allEqual ( ArrayList<Integer> a, int b){
+      for(int i=0;i<a.size();i++){
+         if(a.get(i).equals(b)){
+            return false;
+         }
+      }
+      return true;
+   }
 
    /* Fills all elements of the given array with the given value.
    */

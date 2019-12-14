@@ -26,7 +26,7 @@ public class IterListDemo {
 
       System.out.println("Members of set (using Iterator): ");
       // Now iterate over the elements of the set using the next() and
-      // hasNext() methods, and print each of its members.
+      // hasNext() methods, and print each of its members.IterListDemo 
       while (iter.hasNext()) {      // while there are more elements
          int k = iter.next();       // fetch the next one
          System.out.print(k + " "); // print it

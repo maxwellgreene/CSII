@@ -71,7 +71,6 @@ public interface Graph {
 
    /* Returns a List containing the (ID's of) nodes that are
    ** adjacent to the given node (v) via an edge.
-   */
+   */ 
    List<Integer> neighborList(int v);
-
 }
